@@ -7,9 +7,33 @@ use App\Models\Paquete;
 use App\Models\LoteFormadoPor;
 use App\Models\Lote;
 use Illuminate\Http\Request;
+use App\Models\Alojamiento;
+use App\Models\LoteAsignadoACamion;
 
 class LoteController extends Controller
 {
+    public function MostrarLote($id){
+        $lote = Lote::findOrFail($id);
+        $destino = Alojamiento::find($lote -> destino) -> direccion;
+        $paquetesEnLote = LoteFormadoPor::where('id_lote', '=', $id) -> get();
+        $cantidadPaquetes = count($paquetesEnLote);
+        $pesoEnKg = 0;
+        foreach($paquetesEnLote as $paqueteEnLote){
+            $paquete = Paquete::find($paqueteEnLote -> id_paquete);
+            $pesoEnKg += $paquete -> peso_en_kg;
+        }
+        $camionAsignado = LoteAsignadoACamion::find($id);
+        if($camionAsignado == null) $camionAsignado = "Ninguno";
+        return [
+            "id" => $id,
+            "pesoEnKg" => $pesoEnKg,
+            "camionAsignado" => $camionAsignado,
+            "fechaModificacion" => $lote -> updated_at,
+            "direccionDestino" => $destino,
+            "cantidadPaquetes" => $cantidadPaquetes
+        ];
+    }
+
     public function ListarLotes(){
         return Lote::all();
     }
