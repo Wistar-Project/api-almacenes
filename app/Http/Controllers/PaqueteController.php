@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SedeHogar;
 use App\Models\Paquete;
+use App\Models\Alojamiento;
 use Illuminate\Http\Request;
 
 class PaqueteController extends Controller
@@ -11,7 +12,17 @@ class PaqueteController extends Controller
     public function ListarPaquetes(){
         return Paquete::all();
     }
-
+    public function verInformacionDeUnPaquete($id){
+        $paquete = Paquete::findOrFail($id);
+        $destino = Alojamiento::find($paquete -> destino) -> direccion;
+        $pesoEnKg = $paquete -> peso_en_kg;
+        return [
+            "id" => $id,
+            "pesoEnKg" => $pesoEnKg,
+            "fechaModificacion" => $paquete -> updated_at,
+            "direccionDestino" => $destino,
+        ];
+    }
     public function CrearPaquete(Request $request){
         $pesoEnKilogramos = $request -> post("pesoEnKilogramos");
         $destino = $request -> post("destino");
