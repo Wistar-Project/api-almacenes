@@ -20,9 +20,10 @@ Route::prefix('v1')->group(function ()
 {
     Route::post('/paquetes',[PaqueteController::class,"CrearPaquete"]);
     Route::get('/paquetes',[PaqueteController::class,"ListarPaquetes"]);
-
+    Route::get('/paquetes/{id}', [PaqueteController::class,'verInformacionDeUnPaquete']);
     Route::post('/lotes',[LoteController::class,"CrearLote"]);
     Route::get('/lotes',[LoteController::class,"ListarLotes"]);
+    Route::get('/lotes/{d}', [ LoteController::class, "MostrarLote" ]);
 
     Route::post('/lotes/asignar',[LoteController::class,"AsignarPaquete"]);
 
