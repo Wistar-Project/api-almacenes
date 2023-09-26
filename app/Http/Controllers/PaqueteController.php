@@ -33,7 +33,8 @@ class PaqueteController extends Controller
         
         Paquete::create([
             "peso_en_kg" => $request -> post("pesoEnKilogramos"),
-            "destino" => $request -> post('destino')
+            "destino" => $request -> post('destino'),
+            "email" => $request -> post('email')
         ]);
     }
 
