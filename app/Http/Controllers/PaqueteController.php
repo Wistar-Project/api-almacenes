@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SedeHogar;
 use App\Models\Paquete;
 use Illuminate\Http\Request;
+use App\Models\Sede;
+use Illuminate\Support\Facades\Validator;
 
 class PaqueteController extends Controller
 {
@@ -13,20 +14,15 @@ class PaqueteController extends Controller
     }
 
     public function CrearPaquete(Request $request){
-        $pesoEnKilogramos = $request -> post("pesoEnKilogramos");
-        $destino = $request -> post("destino");
-        $sedeOHogarEncontrado = SedeHogar::find($destino);
-        if($sedeOHogarEncontrado == null){
-            $BAD_REQUEST_HTTP= 400;
-            abort($BAD_REQUEST_HTTP, "La sede u hogar ingresada no existe");
-        }
-        if(!isset($pesoEnKilogramos)){
-            $BAD_REQUEST_HTTP= 400;
-            abort($BAD_REQUEST_HTTP, "No se ha ingresado un peso");
-        }
+        Validator::make($request-> all(), [
+            'pesoEnKilogramos' => 'required|numeric',
+            'email' => 'required|max:70',
+            'destino' => 'required|exists:sedes'
+        ]);
+        
         Paquete::create([
-            "peso_en_kg" => $pesoEnKilogramos,
-            "destino" => $destino
+            "peso_en_kg" => $request -> post("pesoEnKilogramos"),
+            "destino" => $request -> post('destino')
         ]);
     }
 
