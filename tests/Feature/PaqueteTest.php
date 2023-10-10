@@ -25,7 +25,8 @@ class PaqueteTest extends TestCase
     {
         $response = $this->post('/api/v1/paquetes', [
             "pesoEnKilogramos" => 3,
-            "destino" => 1
+            "destino" => 1,
+            "email" => "test@test"
         ]);
         $response->assertStatus(200);
         $this -> assertDatabaseHas('paquetes', [
