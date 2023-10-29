@@ -23,7 +23,8 @@ class PaqueteController extends Controller
             "fechaModificacion" => $paquete -> updated_at,
             "direccionDestino" => $destino,
             "vehiculoAsignado" => $this -> obtenerVehiculoAsignado($paquete),
-            "email" => $paquete -> email
+            "email" => $paquete -> email,
+            "loteAsignado" => $paquete -> lote ?? "Ninguno"
         ];
     }
 
