@@ -22,7 +22,8 @@ class PaqueteController extends Controller
             "pesoEnKg" => $paquete -> peso_en_kg,
             "fechaModificacion" => $paquete -> updated_at,
             "direccionDestino" => $destino,
-            "vehiculoAsignado" => $this -> obtenerVehiculoAsignado($paquete)
+            "vehiculoAsignado" => $this -> obtenerVehiculoAsignado($paquete),
+            "email" => $paquete -> email
         ];
     }
 
