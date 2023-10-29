@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasOne;
 class Lote extends Model
 {
     use HasFactory;
@@ -12,4 +12,9 @@ class Lote extends Model
     protected $fillable = [
         'destino'
     ];
+
+    public function camion(): HasOne
+    {
+        return $this->hasOne(LoteAsignadoACamion::class, "id_paquete");
+    }
 }
