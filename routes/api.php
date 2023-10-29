@@ -16,15 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function ()
-{
-    Route::post('/paquetes',[PaqueteController::class,"CrearPaquete"]);
-    Route::get('/paquetes',[PaqueteController::class,"ListarPaquetes"]);
-    Route::get('/paquetes/{id}', [PaqueteController::class,'verInformacionDeUnPaquete']);
-    Route::post('/lotes',[LoteController::class,"CrearLote"]);
-    Route::get('/lotes',[LoteController::class,"ListarLotes"]);
-    Route::get('/lotes/{d}', [ LoteController::class, "MostrarLote" ]);
+Route::prefix('v1')->group(function () {
+    Route::post('/paquetes', [PaqueteController::class, "CrearPaquete"])->middleware("auth:api");
+    Route::get('/paquetes', [PaqueteController::class, "ListarPaquetes"])->middleware("auth:api");
+    Route::get('/paquetes/{id}', [PaqueteController::class, 'verInformacionDeUnPaquete'])-> middleware("auth:api");
+    Route::post('/lotes', [LoteController::class, "CrearLote"])->middleware("auth:api");
+    Route::get('/lotes', [LoteController::class, "ListarLotes"])->middleware("auth:api");
+    Route::get('/lotes/{d}', [LoteController::class, "MostrarLote"])->middleware("auth:api");
 
-    Route::post('/lotes/asignar',[LoteController::class,"AsignarPaquete"]);
+    Route::post('/lotes/asignar', [LoteController::class, "AsignarPaquete"])->middleware("auth:api");
 
 });
