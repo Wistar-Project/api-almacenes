@@ -65,7 +65,7 @@ class LoteController extends Controller
         ]);
     }
 
-    public function MostarLotesParaAsignar(Request $request, $idDestino){
+    public function MostrarLotesParaAsignar(Request $request, $idDestino){
         $lotesConEseDestino = Lote::where('destino', $idDestino) -> get();
         return $lotesConEseDestino -> pluck('id');
     }
