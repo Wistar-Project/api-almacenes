@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DestinoController;
 use App\Http\Controllers\LoteController;
 use App\Http\Controllers\PaqueteController;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/lotes', [LoteController::class, "CrearLote"])->middleware("auth:api");
     Route::get('/lotes', [LoteController::class, "ListarLotes"])->middleware("auth:api");
     Route::get('/lotes/{d}', [LoteController::class, "MostrarLote"])->middleware("auth:api");
-
+    Route::get('/destinos', [ DestinoController::class, "MostrarDestinos" ])->middleware("auth:api");
     Route::post('/lotes/asignar', [LoteController::class, "AsignarPaquete"])->middleware("auth:api");
 
 });
