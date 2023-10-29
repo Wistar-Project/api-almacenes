@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Paquete;
 use App\Models\Alojamiento;
+use App\Models\PaqueteAsignadoAPickup;
 use Illuminate\Http\Request;
 use App\Models\Sede;
 use Illuminate\Support\Facades\Validator;
@@ -16,13 +17,26 @@ class PaqueteController extends Controller
     public function verInformacionDeUnPaquete($id){
         $paquete = Paquete::findOrFail($id);
         $destino = Alojamiento::find($paquete -> destino) -> direccion;
-        $pesoEnKg = $paquete -> peso_en_kg;
         return [
             "id" => $id,
-            "pesoEnKg" => $pesoEnKg,
+            "pesoEnKg" => $paquete -> peso_en_kg,
             "fechaModificacion" => $paquete -> updated_at,
             "direccionDestino" => $destino,
+            "vehiculoAsignado" => $this -> obtenerVehiculoAsignado($paquete)
         ];
+    }
+
+    private function obtenerVehiculoAsignado($paquete){
+        if($paquete -> pickup){
+            $idVehiculoAsignado = $paquete -> pickup -> id_pickup;
+            return "Pickup $idVehiculoAsignado";
+        }
+        $loteAsignado = $paquete -> lote;
+        if($loteAsignado && $loteAsignado -> camion){
+            $idVehiculoAsignado = $loteAsignado -> camion -> id_camion;
+            return "Camión $idVehiculoAsignado";
+        }
+        return "Ninguno";
     }
     public function CrearPaquete(Request $request){
         Validator::make($request-> all(), [
