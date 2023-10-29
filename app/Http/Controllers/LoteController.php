@@ -64,4 +64,9 @@ class LoteController extends Controller
             "id_paquete" => $paquete
         ]);
     }
+
+    public function MostarLotesParaAsignar(Request $request, $idDestino){
+        $lotesConEseDestino = Lote::where('destino', $idDestino) -> get();
+        return $lotesConEseDestino -> pluck('id');
+    }
 }
