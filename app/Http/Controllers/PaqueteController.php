@@ -47,7 +47,7 @@ class PaqueteController extends Controller
             'destino' => 'required|exists:sedes'
         ]);
         
-        Paquete::create([
+        return Paquete::create([
             "peso_en_kg" => $request -> post("pesoEnKilogramos"),
             "destino" => $request -> post('destino'),
             "email" => $request -> post('email')
