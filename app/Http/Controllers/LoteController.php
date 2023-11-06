@@ -54,10 +54,12 @@ class LoteController extends Controller
     public function AsignarPaquete(Request $request){
         $lote = Lote::findOrFail($request -> post("lote")); 
         $paquete = Paquete::findOrFail($request -> post("paquete"));
+        $BAD_REQUEST_HTTP = 400;
         if($lote -> destino != $paquete -> destino){
-            $BAD_REQUEST_HTTP = 400;
             abort($BAD_REQUEST_HTTP, "Ambos deben tener el mismo destino");
         }
+        if($paquete -> lote)
+            return abort($BAD_REQUEST_HTTP, "El paquete ya está asignado a un lote");
         return LoteFormadoPor::create([
             "id_lote" => $request -> post('lote'),
             "id_paquete" => $request -> post('paquete')
