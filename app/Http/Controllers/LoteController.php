@@ -28,7 +28,7 @@ class LoteController extends Controller
         return [
             "id" => $id,
             "pesoEnKg" => $pesoEnKg,
-            "camionAsignado" => $camionAsignado,
+            "camionAsignado" => "Camión " . $camionAsignado -> id_camion,
             "fechaModificacion" => $lote -> updated_at,
             "direccionDestino" => $destino,
             "cantidadPaquetes" => $cantidadPaquetes
