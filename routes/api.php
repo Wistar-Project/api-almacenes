@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/lotes/{d}', [LoteController::class, "MostrarLote"])->middleware("auth:api");
     Route::get('/destinos', [ DestinoController::class, "MostrarDestinos" ])->middleware("auth:api");
     Route::get('/lotes/asignar/{d}', [ LoteController::class, "MostrarLotesParaAsignar" ]);
+    Route::get('/paquetes/asignar/{d}', [ PaqueteController::class, "MostrarPaquetesParaAsignar" ]);
     Route::post('/lotes/asignar', [LoteController::class, "AsignarPaquete"])->middleware("auth:api");
 
 });
