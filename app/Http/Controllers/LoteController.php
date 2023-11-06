@@ -24,11 +24,12 @@ class LoteController extends Controller
             $pesoEnKg += $paquete -> peso_en_kg;
         }
         $camionAsignado = LoteAsignadoACamion::find($id);
-        if($camionAsignado == null) $camionAsignado = "Ninguno";
+        if($camionAsignado != null)
+            $camionAsignado = "Camión " . $camionAsignado -> id_camion;
         return [
             "id" => $id,
             "pesoEnKg" => $pesoEnKg,
-            "camionAsignado" => $camionAsignado,
+            "camionAsignado" => $camionAsignado ?? "Ninguno",
             "fechaModificacion" => $lote -> updated_at,
             "direccionDestino" => $destino,
             "cantidadPaquetes" => $cantidadPaquetes
