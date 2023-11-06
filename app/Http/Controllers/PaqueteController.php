@@ -54,4 +54,8 @@ class PaqueteController extends Controller
         ]);
     }
 
+    public function MostrarPaquetesParaAsignar(Request $request, $idDestino){
+        $lotesConEseDestino = Paquete::where('destino', $idDestino) -> get();
+        return $lotesConEseDestino -> pluck('id');
+    }
 }
