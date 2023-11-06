@@ -24,7 +24,7 @@ class PaqueteController extends Controller
             "direccionDestino" => $destino,
             "vehiculoAsignado" => $this -> obtenerVehiculoAsignado($paquete),
             "email" => $paquete -> email,
-            "loteAsignado" => $paquete -> lote ?? "Ninguno"
+            "loteAsignado" => $paquete -> lote -> id_lote ?? "Ninguno"
         ];
     }
 
