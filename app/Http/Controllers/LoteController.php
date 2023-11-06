@@ -46,7 +46,7 @@ class LoteController extends Controller
             $BAD_REQUEST_HTTP= 400;
             abort($BAD_REQUEST_HTTP, "La sede no existe");
         }
-        Lote::create([
+        return Lote::create([
             "destino" => $destino 
         ]);
     }
