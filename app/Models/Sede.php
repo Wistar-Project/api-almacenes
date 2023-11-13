@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Sede extends Model
 {
     use HasFactory;
+    protected $fillable = [ "id" ];
 
     public function alojamiento(): HasOne
     {

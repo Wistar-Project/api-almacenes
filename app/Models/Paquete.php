@@ -11,6 +11,7 @@ class Paquete extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'peso_en_kg',
         'destino',
         'email'

@@ -10,6 +10,6 @@ class Alojamiento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'direccion',
+        "id", 'direccion',
     ];
 }
