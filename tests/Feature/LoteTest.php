@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Alojamiento;
 use App\Models\Conductor;
 use App\Models\Funcionario;
+use App\Models\Paquete;
 use App\Models\Persona;
 use App\Models\Sede;
 use App\Models\User;
@@ -17,14 +18,14 @@ class LoteTest extends TestCase
 {
     private function crearFuncionario(){
         $user = User::factory()->create();
-        Persona::create([ "id" => $user -> id ]);
+        Persona::create([ "id" => $user -> id, "nombre" => "a", "apellido" => "a" ]);
         Funcionario::create(["id" => $user -> id]);
         return $user;
     }
 
     private function crearChofer(){
         $user = User::factory()->create();
-        Persona::create([ "id" => $user -> id ]);
+        Persona::create([ "id" => $user -> id, "nombre" => "a", "apellido" => "a" ]);
         Conductor::create(["id" => $user -> id]);
         return $user;
     }
@@ -43,7 +44,7 @@ class LoteTest extends TestCase
         ]);
         $response->assertStatus(401);
         $response->assertExactJson([
-            "message" => "Unauthorized."
+            "message" => "Unauthenticated."
         ]);
     }
 
@@ -68,7 +69,7 @@ class LoteTest extends TestCase
         $response = $this->actingAs($this -> crearFuncionario(), "api")->post('/api/v1/lotes', [
             "destino" => 1
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $this -> assertDatabaseHas('lotes', [
             "destino" => 1,
         ]);
@@ -89,7 +90,7 @@ class LoteTest extends TestCase
         ]);
         $response->assertStatus(401);
         $response->assertExactJson([
-            "message" => "Unauthorized."
+            "message" => "Unauthenticated."
         ]);
     }
 
@@ -112,11 +113,17 @@ class LoteTest extends TestCase
 
     public function test_asignar_paquete_a_lote()
     {
+        Paquete::create([
+            "id" => 1,
+            "destino" => 1,
+            "email" => "a@gmail.com",
+            "peso_en_kg" => 5
+        ]);
         $response = $this->actingAs($this->crearFuncionario(), "api")->post('/api/v1/lotes/asignar', [
             "lote" => 1,
             "paquete" => 1
         ]);
-        $response->assertStatus(200);
+        $response->assertStatus(201);
         $this -> assertDatabaseHas('lote_formado_por', [
             "id_lote" => 1,
             "id_paquete" => 1
@@ -133,7 +140,7 @@ class LoteTest extends TestCase
         ]);
         $response->assertStatus(401);
         $response->assertExactJson([
-            "message" => "Unauthorized."
+            "message" => "Unauthenticated."
         ]);
     }
 
@@ -153,13 +160,13 @@ class LoteTest extends TestCase
 
     public function test_mostrar_lote()
     {
-        $response = $this->actingAs($this->crearFuncionario(), "api")->post('/api/v1/lotes/1');
+        $response = $this->actingAs($this->crearFuncionario(), "api")->get('/api/v1/lotes/1');
         $response->assertStatus(200);
         $response->assertJson([
-            "pesoEnKg" => 0,
+            "pesoEnKg" => 5,
             "camionAsignado" => "Ninguno",
-            "direccionDestino" => 1,
-            "cantidadPaquetes" => 0
+            "direccionDestino" => "Dirección 1",
+            "cantidadPaquetes" => 1
         ]);
     }
 
