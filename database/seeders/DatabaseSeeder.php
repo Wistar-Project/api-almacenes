@@ -18,22 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Alojamiento::create([
-            "id" => 1,
-            "direccion" => "Avenida brasil 1295"
-        ]);
-        Sede::create([
-            "id" => 1
-        ]);
-        Paquete::create([
-            "id" => 1,
-            "peso_en_kg" => 5,
-            "destino" => 1,
-            "email" => "persona@gmail.com"
-        ]);
-        Lote::create([
-            "id" => 1,
-            "destino" => 1
-        ]);
+
     }
 }
