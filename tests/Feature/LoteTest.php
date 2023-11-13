@@ -170,4 +170,24 @@ class LoteTest extends TestCase
         ]);
     }
 
+    public function test_mostrar_lotes_para_asignar(){
+        Alojamiento::create([ "id" => 15, "direccion" => "Dirección 15" ]);
+        Sede::create([ "id" => 15 ]);
+        Lote::create([ "id" => 15, "destino" => 15 ]);
+        Lote::create([ "id" => 16, "destino" => 15 ]);
+        Lote::create([ "id" => 17, "destino" => 15 ]);
+        $response = $this->actingAs($this->crearFuncionario(), "api")->get('/api/v1/lotes/asignar/15');
+        $response->assertStatus(200);
+        $response->assertExactJson([15, 16, 17]);
+    }
+
+    public function test_mostrar_lotes_para_asignar_sin_autenticarse(){
+        $response = $this->get('/api/v1/lotes/asignar/15', [
+            "Accept" => "application/json"
+        ]);
+        $response->assertStatus(401);
+        $response->assertExactJson([
+            "message" => "Unauthenticated."
+        ]);
+    }
 }
