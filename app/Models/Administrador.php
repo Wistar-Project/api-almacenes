@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alojamiento extends Model
+class Administrador extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        "id", 'direccion',
-    ];
+    protected $table = "administradores";
+    protected $fillable = [ "id" ];
 }

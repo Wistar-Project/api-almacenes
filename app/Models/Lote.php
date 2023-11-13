@@ -10,7 +10,7 @@ class Lote extends Model
     use HasFactory;
 
     protected $fillable = [
-        'destino'
+        "id", 'destino'
     ];
 
     public function camion(): HasOne
