@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->group(function () {
-    Route::middleware('auth:api')->group(function(){
+    Route::middleware(['auth:api', 'funcionario-o-mayor'])->group(function(){
         Route::post('/paquetes', [PaqueteController::class, "CrearPaquete"]);
         Route::get('/paquetes', [PaqueteController::class, "ListarPaquetes"]);
         Route::get('/paquetes/{id}', [PaqueteController::class, 'verInformacionDeUnPaquete']);
